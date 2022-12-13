@@ -1,7 +1,7 @@
 import { weightedSubwayPath } from "../static/Static.js";
 import Dijkstra from "./Dijkstra.js";
 
-export function SubwayPath() {
+export default function SubwayPathCalculator() {
   this.subwayPathByTime = new Dijkstra();
   this.subwayPathByDistance = new Dijkstra();
 

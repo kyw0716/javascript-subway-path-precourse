@@ -8,12 +8,27 @@ const arrivalStationInput = document.querySelector(
 );
 const searchTypeInput = document.querySelectorAll('input[name="search-type"]');
 
-export function InputView(submitCallback) {
+export default function InputView(submitCallback) {
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     const departureStation = departureStationInput.value;
     const arrivalStation = arrivalStationInput.value;
+    const checkedSearchType = getCheckedSearchType();
 
-    submitCallback([departureStation, arrivalStation]);
+    submitCallback([checkedSearchType, departureStation, arrivalStation]);
   });
+
+  const getCheckedSearchType = () => {
+    let checkedSearchType;
+
+    for (let i = 0; i < searchTypeInput.length; i++) {
+      const radio = searchTypeInput[i];
+      if (radio.checked) {
+        checkedSearchType = radio.value;
+        break;
+      }
+    }
+
+    return checkedSearchType;
+  };
 }
