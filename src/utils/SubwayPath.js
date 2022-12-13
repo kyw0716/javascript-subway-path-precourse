@@ -1,24 +1,101 @@
+import { weightedSubwayPath } from "../static/Static.js";
 import Dijkstra from "./Dijkstra.js";
 
 export function SubwayPath() {
   this.subwayPathByTime = new Dijkstra();
   this.subwayPathByDistance = new Dijkstra();
 
-  this.subwayPathByTime.addEdge("교대", "강남", 3);
-  this.subwayPathByTime.addEdge("강남", "역삼", 3);
-  this.subwayPathByTime.addEdge("교대", "남부터미널", 2);
-  this.subwayPathByTime.addEdge("남부터미널", "양재", 5);
-  this.subwayPathByTime.addEdge("양재", "매봉", 1);
-  this.subwayPathByTime.addEdge("강남", "양재", 8);
-  this.subwayPathByTime.addEdge("양재", "양재시민의숲", 3);
+  this.subwayPathByTime.addEdge(
+    "교대",
+    "강남",
+    weightedSubwayPath["교대"]["강남"]["time"]
+  );
+  this.subwayPathByTime.addEdge(
+    "강남",
+    "역삼",
+    weightedSubwayPath["강남"]["역삼"]["time"]
+  );
+  this.subwayPathByTime.addEdge(
+    "교대",
+    "남부터미널",
+    weightedSubwayPath["교대"]["남부터미널"]["time"]
+  );
+  this.subwayPathByTime.addEdge(
+    "남부터미널",
+    "양재",
+    weightedSubwayPath["남부터미널"]["양재"]["time"]
+  );
+  this.subwayPathByTime.addEdge(
+    "양재",
+    "매봉",
+    weightedSubwayPath["양재"]["매봉"]["time"]
+  );
+  this.subwayPathByTime.addEdge(
+    "강남",
+    "양재",
+    weightedSubwayPath["강남"]["양재"]["time"]
+  );
+  this.subwayPathByTime.addEdge(
+    "양재",
+    "양재시민의숲",
+    weightedSubwayPath["양재"]["양재시민의숲"]["time"]
+  );
 
-  this.subwayPathByDistance.addEdge("교대", "강남", 2);
-  this.subwayPathByDistance.addEdge("강남", "역삼", 2);
-  this.subwayPathByDistance.addEdge("교대", "남부터미널", 3);
-  this.subwayPathByDistance.addEdge("남부터미널", "양재", 6);
-  this.subwayPathByDistance.addEdge("양재", "매봉", 1);
-  this.subwayPathByDistance.addEdge("강남", "양재", 2);
-  this.subwayPathByDistance.addEdge("양재", "양재시민의숲", 10);
+  this.subwayPathByDistance.addEdge(
+    "교대",
+    "강남",
+    weightedSubwayPath["교대"]["강남"]["distance"]
+  );
+  this.subwayPathByDistance.addEdge(
+    "강남",
+    "역삼",
+    weightedSubwayPath["강남"]["역삼"]["distance"]
+  );
+  this.subwayPathByDistance.addEdge(
+    "교대",
+    "남부터미널",
+    weightedSubwayPath["교대"]["남부터미널"]["distance"]
+  );
+  this.subwayPathByDistance.addEdge(
+    "남부터미널",
+    "양재",
+    weightedSubwayPath["남부터미널"]["양재"]["distance"]
+  );
+  this.subwayPathByDistance.addEdge(
+    "양재",
+    "매봉",
+    weightedSubwayPath["양재"]["매봉"]["distance"]
+  );
+  this.subwayPathByDistance.addEdge(
+    "강남",
+    "양재",
+    weightedSubwayPath["강남"]["양재"]["distance"]
+  );
+  this.subwayPathByDistance.addEdge(
+    "양재",
+    "양재시민의숲",
+    weightedSubwayPath["양재"]["양재시민의숲"]["distance"]
+  );
+
+  this.getShortestDistance = (route) => {
+    let distance = 0;
+
+    for (let i = 0; i < route.length - 1; i++) {
+      distance += weightedSubwayPath[route[i]][route[i + 1]]["distance"];
+    }
+
+    return distance;
+  };
+
+  this.getShortestTime = (route) => {
+    let time = 0;
+
+    for (let i = 0; i < route.length - 1; i++) {
+      time += weightedSubwayPath[route[i]][route[i + 1]]["time"];
+    }
+
+    return time;
+  };
 
   this.getShortestPathByDistance = (startStation, endStation) => {
     return this.subwayPathByDistance.findShortestPath(startStation, endStation);
@@ -26,5 +103,19 @@ export function SubwayPath() {
 
   this.getShortestPathByTime = (startStation, endStation) => {
     return this.subwayPathByTime.findShortestPath(startStation, endStation);
+  };
+
+  this.getResultByTime = (startStation, endStation) => {
+    const route = this.getShortestPathByTime(startStation, endStation);
+    const time = this.getShortestTime(route);
+
+    return [route, time];
+  };
+
+  this.getResultByDistance = (startStation, endStation) => {
+    const route = this.getShortestPathByDistance(startStation, endStation);
+    const distance = this.getShortestDistance(route);
+
+    return [route, distance];
   };
 }
