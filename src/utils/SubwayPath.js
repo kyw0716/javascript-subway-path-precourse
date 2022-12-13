@@ -77,7 +77,7 @@ export function SubwayPath() {
     weightedSubwayPath["양재"]["양재시민의숲"]["distance"]
   );
 
-  this.getShortestDistance = (route) => {
+  this.getTotalDistance = (route) => {
     let distance = 0;
 
     for (let i = 0; i < route.length - 1; i++) {
@@ -87,7 +87,7 @@ export function SubwayPath() {
     return distance;
   };
 
-  this.getShortestTime = (route) => {
+  this.getTotalTime = (route) => {
     let time = 0;
 
     for (let i = 0; i < route.length - 1; i++) {
@@ -107,15 +107,17 @@ export function SubwayPath() {
 
   this.getResultByTime = (startStation, endStation) => {
     const route = this.getShortestPathByTime(startStation, endStation);
-    const time = this.getShortestTime(route);
+    const time = this.getTotalTime(route);
+    const distance = this.getTotalDistance(route);
 
-    return [route, time];
+    return [route, [time, distance]];
   };
 
   this.getResultByDistance = (startStation, endStation) => {
     const route = this.getShortestPathByDistance(startStation, endStation);
-    const distance = this.getShortestDistance(route);
+    const time = this.getTotalTime(route);
+    const distance = this.getTotalDistance(route);
 
-    return [route, distance];
+    return [route, [time, distance]];
   };
 }
