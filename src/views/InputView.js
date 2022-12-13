@@ -12,6 +12,8 @@ export function InputView(submitCallback) {
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     const departureStation = departureStationInput.value;
-    console.log(departureStation);
+    const arrivalStation = arrivalStationInput.value;
+
+    submitCallback([departureStation, arrivalStation]);
   });
 }
